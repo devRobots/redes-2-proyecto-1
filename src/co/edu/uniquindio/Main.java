@@ -11,10 +11,9 @@ import java.util.Scanner;
  * @author Samara Smith Rincon Montaña
  */
 public class Main {
-
     /**
      * Metodo Completar Digitos
-     * <p>
+     *
      * Completa con 0s los digitos de un numero
      *
      * @param num El numero que se va a completar
@@ -32,7 +31,7 @@ public class Main {
 
     /**
      * Metodo Gestionar Fragmentos
-     * <p>
+     *
      * Genera los flags, el offset en binario y decimal y la conversion
      * hexadecimal de los 16 bits y los retorna en una cadena.
      *
@@ -65,20 +64,16 @@ public class Main {
     }
 
     /**
-     * Metodo main
-     * <p>
+     * Metodo Main
+     *
      * Metodo principal donde se ejecuta el codigo
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         int tamDatagrama, mtu, cantFragmentos;
         String resultado = "\n";
 
-        imprimir("Longitud total del datagrama: ");
-        tamDatagrama = scanner.nextInt();
-
-        imprimir("Longitud del MTU de la red: ");
-        mtu = scanner.nextInt();
+        tamDatagrama = leerEntero("Longitud total del datagrama");
+        mtu = leerEntero("Longitud del MTU de la red");
 
         cantFragmentos = tamDatagrama > mtu ? tamDatagrama / mtu + 1 : 1;
         resultado += "Cantidad de Fragmentos: " + cantFragmentos + "\n\n";
@@ -90,8 +85,8 @@ public class Main {
     }
 
     /**
-     * Metodo imprimir
-     * <p>
+     * Metodo Imprimir
+     *
      * Imprime un texto
      * Sirve como alias de System.out.print();
      *
@@ -99,5 +94,25 @@ public class Main {
      */
     private static void imprimir(String texto) {
         System.out.print(texto);
+    }
+
+    /**
+     * Metodo Leer Entero
+     *
+     * Muestra una pregunta en pantalla y lee un numero entero valido
+     *
+     * @param pregunta El mensaje que se va a mostrar en pantalla
+     * @return int : Entero leido
+     */
+    private static int leerEntero(String pregunta) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            imprimir(pregunta + ": ");
+            String entrada = scanner.nextLine();
+            return Integer.parseInt(entrada);
+        } catch (Exception ex) {
+            imprimir("Error: Ingrese un numero valido\n\n");
+            return leerEntero(pregunta);
+        }
     }
 }
