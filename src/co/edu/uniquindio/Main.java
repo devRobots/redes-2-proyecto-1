@@ -1,5 +1,6 @@
 package co.edu.uniquindio;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
@@ -174,7 +175,6 @@ public class Main {
             //JOptionPane.showMessageDialog(null, texto);
             imprimir(texto);
         }
-
 
 
     }
