@@ -1,5 +1,6 @@
 package co.edu.uniquindio;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
