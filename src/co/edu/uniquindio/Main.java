@@ -1,5 +1,6 @@
 package co.edu.uniquindio;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -12,51 +13,32 @@ import java.util.Scanner;
  */
 public class Main {
     /**
-     * Metodo Completar Digitos
+     * Metodo Obtener Fragmentos
      *
-     * Completa con 0s los digitos de un numero
-     *
-     * @param num El numero que se va a completar
-     * @param tam El tamaño que deberia tener la cadena de digitos
-     * @return String : El numero num con la cantidad de digitos tam
-     */
-    public static String completarDigitos(String num, int tam) {
-        StringBuilder binBuilder = new StringBuilder(num);
-        while (binBuilder.length() < tam) {
-            binBuilder.insert(0, "0");
-        }
-        num = binBuilder.toString();
-        return num;
-    }
-
-    /**
-     * Metodo Gestionar Fragmentos
-     *
-     * Genera los flags, el offset en binario y decimal y la conversion
-     * hexadecimal de los 16 bits y los retorna en una cadena.
+     * Genera una lista con los fragmentos en base
+     * a la data y al MTU ingresados
      *
      * @param data Longitud del datagrama
      * @param mtu  Longitud del MTU de la red
-     * @return String : La salida procesada
+     * @return ArrayList<Fragmento> : La lista con los fragmentos
      */
-    public static String gestionarFragmentos(int data, int mtu) {
+    public static ArrayList<Fragmento> obtenerFragmentos(int data, int mtu) {
         int offset = 0;
-        int n = data > mtu ? data / mtu + 1 : 1;
+        int n = data > mtu ? (int)Math.ceil((double)(data - 20) / (mtu - 20)) : 1;
 
-        StringBuilder salida = new StringBuilder();
-        salida.append("Cantidad de Fragmentos: ").append(n).append("\n\n");
+        ArrayList<Fragmento> lista = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             String flag = i < n - 1 ? "001" : "000";
 
-            int longitud = i < n - 1 ? mtu - 20 : data - offset;
+            int longitud = i < n - 1 ? mtu : data - offset;
             Fragmento fragmento = new Fragmento(i+1, longitud, flag, offset);
-            salida.append(fragmento.toString());
+            lista.add(fragmento);
 
             offset += (mtu - 20);
         }
 
-        return salida.toString();
+        return lista;
     }
 
     /**
@@ -69,8 +51,16 @@ public class Main {
         tamDatagrama = leerEntero("Longitud total del datagrama");
         mtu = leerEntero("Longitud del MTU de la red");
 
-        imprimir("\n" + gestionarFragmentos(tamDatagrama, mtu));
-        imprimir("------------------------------------\n\n");
+        if (tamDatagrama > 20) {
+            if (mtu > 20) {
+                imprimirLista(obtenerFragmentos(tamDatagrama, mtu));
+                imprimir("------------------------------------\n\n");
+            } else {
+                imprimir("Error: MTU invalido");
+            }
+        } else {
+            imprimir("Error: Longitud de datagrama incorrecta");
+        }
     }
 
     /**
@@ -83,6 +73,20 @@ public class Main {
      */
     private static void imprimir(String texto) {
         System.out.print(texto);
+    }
+
+    /**
+     * Metodo  ImprimirLista
+     *
+     * Imprime el texto de una lista
+     *
+     * @param lista La lista a imprimir
+     */
+    private static void imprimirLista(ArrayList<?> lista) {
+        imprimir("\n Cantidad de fragmentos: " + lista.size() + "\n\n");
+        for (Object elemento : lista) {
+            imprimir(elemento.toString());
+        }
     }
 
     /**
