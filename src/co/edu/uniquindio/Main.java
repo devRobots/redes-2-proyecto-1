@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Main {
     /**
      * Metodo Obtener Fragmentos
-     *
+     * <p>
      * Genera una lista con los fragmentos en base
      * a la data y al MTU ingresados
      *
@@ -24,7 +24,7 @@ public class Main {
      */
     public static ArrayList<Fragmento> obtenerFragmentos(int data, int mtu) {
         int offset = 0;
-        int n = data > mtu ? (int)Math.ceil((double)(data - 20) / (mtu - 20)) : 1;
+        int n = data > mtu ? (int) Math.ceil((double) (data - 20) / (mtu - 20)) : 1;
 
         ArrayList<Fragmento> lista = new ArrayList<>();
 
@@ -32,7 +32,7 @@ public class Main {
             String flag = i < n - 1 ? "001" : "000";
 
             int longitud = i < n - 1 ? mtu : data - offset;
-            Fragmento fragmento = new Fragmento(i+1, longitud, flag, offset);
+            Fragmento fragmento = new Fragmento(i + 1, longitud, flag, offset);
             lista.add(fragmento);
 
             offset += (mtu - 20);
@@ -43,7 +43,7 @@ public class Main {
 
     /**
      * Metodo Main
-     *
+     * <p>
      * Metodo principal donde se ejecuta el codigo
      */
     public static void main(String[] args) {
@@ -65,7 +65,7 @@ public class Main {
 
     /**
      * Metodo Imprimir
-     *
+     * <p>
      * Imprime un texto
      * Sirve como alias de System.out.print();
      *
@@ -77,7 +77,7 @@ public class Main {
 
     /**
      * Metodo  ImprimirLista
-     *
+     * <p>
      * Imprime el texto de una lista
      *
      * @param lista La lista a imprimir
@@ -91,7 +91,7 @@ public class Main {
 
     /**
      * Metodo Leer Entero
-     *
+     * <p>
      * Muestra una pregunta en pantalla y lee un numero entero valido
      *
      * @param pregunta El mensaje que se va a mostrar en pantalla
