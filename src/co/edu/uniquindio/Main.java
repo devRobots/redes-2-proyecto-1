@@ -35,7 +35,7 @@ public class Main {
             Fragmento fragmento = new Fragmento(i + 1, longitud, flag, offset);
             lista.add(fragmento);
 
-            offset += (int) Math.ceil((double)(mtu - 20) / 8);
+            offset += mtu - 20;
         }
 
         return lista;
